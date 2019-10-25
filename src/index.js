@@ -3,6 +3,7 @@ import {getBankHolidays} from "./get-bank-holidays";
 import {getLeave} from "./get-leave";
 import {svg, height, g, x, y, z, line} from "./render";
 import {drawAxes} from "./burndown-axes";
+import {drawBounds} from "./burndown-bounds";
 import {drawPastTrend, drawFutureTrend} from "./burndown-trend";
 import {drawLostArea} from "./burndown-lost-area";
 import {drawPerson} from "./burndown-person";
