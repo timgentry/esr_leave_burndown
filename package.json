@@ -4,7 +4,7 @@
   "description": "Leave burndown chart",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint .",
+    "lint": "standard",
     "build": "webpack",
     "watch": "webpack --watch --mode=development"
   },
@@ -13,7 +13,7 @@
   "author": "tim.gentry <tim.gentry@phe.gov.uk>",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^5.4.0",
+    "standard": "^14.3.1",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0"
   },
