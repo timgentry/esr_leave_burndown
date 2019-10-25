@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Leave burndown chart</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+  <body>
+    <svg width="960" height="500" style="margin: 100 200">
+      <style>
+        /* <![CDATA[ */
+         path.unavailable {
+          fill: lightgrey;
+        }
+        path.lost {
+          fill: #fcc
+        }
+        .today {
+          fill: none;
+          stroke: darkgrey;
+          stroke-linecap: round;
+          stroke-width: 1px;
+        }
+        .line {
+          fill: none;
+          stroke: steelblue;
+          stroke-linejoin: round;
+          stroke-linecap: round;
+          stroke-width: 1.5px;
+          /* stroke-opacity: 1; */
+        }
+        .line.trend {
+          stroke: #333;
+        }
+        .line.trend.bg {
+          stroke: white;
+          stroke-width: 5px;
+        }
+        .target {
+          fill: none;
+          stroke: none;
+          stroke-linejoin: round;
+          stroke-linecap: round;
+          stroke-width: 10px;
+          stroke-opacity: 0;
+        }
+        .person .line {
+          stroke-opacity: 0.4;
+        }
+        .person.selected .line {
+          stroke-opacity: 1 !important;
+        }
+        .person.unselected .line {
+          stroke-opacity: 0.20 !important;
+        }
+        .person text {
+          cursor: default;
+          font: 10px sans-serif;
+          opacity: 0;
+        }
+        .person text.bg {
+          stroke: white;
+          stroke-linecap: round;
+          stroke-width: 3px;
+        }
+        .person.selected text {
+          opacity: 1 !important;
+        }
+        .line.planned {
+          stroke-dasharray: 3, 5;
+        }
+        .line.guide {
+          stroke: black;
+          stroke-dasharray: 1, 5;
+          stroke-width: 1px;
+          stroke-opacity: 1;
+        }
+        /* ]]> */
+      </style>
+    </svg>
+    <script src="main.js"></script>
+  </body>
+</html>
