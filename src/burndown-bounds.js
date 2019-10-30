@@ -1,32 +1,32 @@
-import * as d3 from "d3";
-import {work_day} from "./burndown-utils";
+import * as d3 from 'd3'
+import { workDay } from './burndown-utils'
 
-function bound_days(all_dates, bank_holidays, range) {
-  var data = [],
-      index = 0;
+function boundDays (allDates, bankHolidays, range) {
+  var data = []
+  var index = 0
 
-  var working_day_count = all_dates.filter(date => work_day(date, bank_holidays)).length;
+  var workingDayCount = allDates.filter(date => workDay(date, bankHolidays)).length
 
-  var scale = d3.scaleLinear().range(range).domain([0, working_day_count]);
+  var scale = d3.scaleLinear().range(range).domain([0, workingDayCount])
 
-  all_dates.forEach(function(date) {
-    data.push({ date: date, index: index, days: scale(index) });
-    if (work_day(date, bank_holidays)) ++index;
-  });
+  allDates.forEach(function (date) {
+    data.push({ date: date, index: index, days: scale(index) })
+    if (workDay(date, bankHolidays)) ++index
+  })
 
-  return data;
+  return data
 }
 
-function drawBounds(g, all_dates, bank_holidays, line) {
-  g.append("path")
-      .datum(bound_days(all_dates, bank_holidays, [27, 0]))
-      .attr("class", "line guide")
-      .attr("d", line);
+function drawBounds (g, allDates, bankHolidays, line) {
+  g.append('path')
+    .datum(boundDays(allDates, bankHolidays, [27, 0]))
+    .attr('class', 'line guide')
+    .attr('d', line)
 
-  g.append("path")
-      .datum(bound_days(all_dates, bank_holidays, [38, 5]))
-      .attr("class", "line guide")
-      .attr("d", line);
+  g.append('path')
+    .datum(boundDays(allDates, bankHolidays, [38, 5]))
+    .attr('class', 'line guide')
+    .attr('d', line)
 }
 
-export {drawBounds};
+export { drawBounds }

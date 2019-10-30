@@ -1,31 +1,31 @@
-import * as d3 from "d3";
-import {work_day} from "./burndown-utils";
+import * as d3 from 'd3'
+import { workDay } from './burndown-utils'
 
-function unavailable_area(x, y) {
+function unavailableArea (x, y) {
   return d3.area()
     .x(d => x(d.date))
     .y0(y(0))
-    .y1(d => y(d.days));
+    .y1(d => y(d.days))
 }
 
-function unavailable_days(all_dates, bank_holidays) {
-  var total_unavailable_days = 27;
-  var data = [];
-  all_dates.forEach(function(date) {
-    if (total_unavailable_days < 0) return false;
+function unavailableDays (allDates, bankHolidays) {
+  var totalUnavailableDays = 27
+  var data = []
+  allDates.forEach(function (date) {
+    if (totalUnavailableDays < 0) return false
 
-    data.push({ date: date, days: total_unavailable_days });
-    if (work_day(date, bank_holidays)) --total_unavailable_days;
-  });
+    data.push({ date: date, days: totalUnavailableDays })
+    if (workDay(date, bankHolidays)) --totalUnavailableDays
+  })
 
-  return data;
+  return data
 }
 
-function drawUnavailableArea(g, all_dates, bank_holidays, x, y) {
-  g.append("path")
-      .datum(unavailable_days(all_dates, bank_holidays))
-      .attr("class", "unavailable")
-      .attr("d", unavailable_area(x, y));
+function drawUnavailableArea (g, allDates, bankHolidays, x, y) {
+  g.append('path')
+    .datum(unavailableDays(allDates, bankHolidays))
+    .attr('class', 'unavailable')
+    .attr('d', unavailableArea(x, y))
 }
 
-export {drawUnavailableArea};
+export { drawUnavailableArea }

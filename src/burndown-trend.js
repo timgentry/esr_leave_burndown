@@ -1,74 +1,80 @@
-function getTrend(people, all_dates) {
-  var daily_total = {};
-  for (let person of people) {
-    var days = 0;
-    var last_days = 0;
-    all_dates.forEach(function(date) {
-      daily_total[date] || (daily_total[date] = 0);
+function getTrend (people, allDates) {
+  var dailyTotal = {}
+  for (const person of people) {
+    var days = 0
+    var lastDays = 0
+    allDates.forEach(function (date) {
+      dailyTotal[date] || (dailyTotal[date] = 0)
       // console.log(person.values);
-      let date_entry = person.values.find(function(d){ return d.date == date; });
-      if (typeof date_entry == "undefined") {
-        days = last_days;
+      const dateEntry = person.values.find(function (d) { return d.date === date })
+      if (typeof dateEntry === 'undefined') {
+        days = lastDays
       } else {
-        days = date_entry.days;
-        last_days = days;
+        days = dateEntry.days
+        lastDays = days
       }
-      daily_total[date] += days;
-    });
+      dailyTotal[date] += days
+    })
   }
 
   // Calculate the latest date of booked leave
-  let last_date = all_dates[0];
-  for (let person of people) {
-    let leave_dates = person.values.map(function(d){ return d.date; });
-    let last_leave_date = new Date(Math.max.apply(null, leave_dates));
-    if (last_leave_date > last_date) last_date = last_leave_date;
+  let lastDate = allDates[0]
+  for (const person of people) {
+    const leaveDates = person.values.map(function (d) { return d.date })
+    const lastLeaveDate = new Date(Math.max.apply(null, leaveDates))
+    if (lastLeaveDate > lastDate) lastDate = lastLeaveDate
   }
 
-  var trend = [];
-  for (let date in daily_total) {
-    var total_days = daily_total[date];
-    if (new Date(date) < last_date) trend.push({date: new Date(date), days: total_days / people.length});
+  var trend = []
+  for (const date in dailyTotal) {
+    var totalDays = dailyTotal[date]
+    if (new Date(date) < lastDate) trend.push({ date: new Date(date), days: totalDays / people.length })
   }
-  return trend;
+  return trend
 }
 
-function drawPastTrend(g, people, all_dates, line) {
-  var trend = getTrend(people, all_dates);
+function drawPastTrend (g, people, allDates, line) {
+  var trend = getTrend(people, allDates)
 
-  g.append("path")
-      .datum(trend)
-      .attr("class", "line trend bg")
-      .attr("d", function(d) { return line(d.filter(function(d){
-        return d.date <= new Date();
-      })); })
-      ;
-  g.append("path")
-      .datum(trend)
-      .attr("class", "line trend")
-      .attr("d", function(d) { return line(d.filter(function(d){
-        return d.date <= new Date();
-      })); })
-      ;
+  g.append('path')
+    .datum(trend)
+    .attr('class', 'line trend bg')
+    .attr('d', function (d) {
+      return line(d.filter(function (d) {
+        return d.date <= new Date()
+      }))
+    })
+
+  g.append('path')
+    .datum(trend)
+    .attr('class', 'line trend')
+    .attr('d', function (d) {
+      return line(d.filter(function (d) {
+        return d.date <= new Date()
+      }))
+    })
 }
 
-function drawFutureTrend(g, people, all_dates, line) {
-  var trend = getTrend(people, all_dates);
+function drawFutureTrend (g, people, allDates, line) {
+  var trend = getTrend(people, allDates)
 
-  g.append("path")
-      .datum(trend)
-      .attr("class", "line planned trend bg")
-      .attr("d", function(d) { return line(d.filter(function(d){
-        return d.date > new Date();
-      })); })
-      ;
-  g.append("path")
-      .datum(trend)
-      .attr("class", "line planned trend")
-      .attr("d", function(d) { return line(d.filter(function(d){
-        return d.date > new Date();
-      })); })
-      ;
+  g.append('path')
+    .datum(trend)
+    .attr('class', 'line planned trend bg')
+    .attr('d', function (d) {
+      return line(d.filter(function (d) {
+        return d.date > new Date()
+      }))
+    })
+
+  g.append('path')
+    .datum(trend)
+    .attr('class', 'line planned trend')
+    .attr('d', function (d) {
+      return line(d.filter(function (d) {
+        return d.date > new Date()
+      }))
+    })
 }
 
-export {drawPastTrend, drawFutureTrend};
+export { drawPastTrend, drawFutureTrend }
