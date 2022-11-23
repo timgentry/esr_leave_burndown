@@ -1,7 +1,7 @@
 namespace :scrape do
   desc 'Scrape ESR'
   task :esr do
-    # Usage: bundle exec rake scrape:esr
+    # Usage: bundle exec rake scrape:esr ESR_USERNAME=919TGENTRY01
     require_relative '../lib/esr'
     require 'highline/import'
 
